@@ -1,0 +1,32 @@
+# Python & Environment
+__pycache__/
+*.py[cod]
+*$py.class
+*.env
+.env
+.venv/
+venv/
+ENV/
+
+# Next.js & Node
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+.npm
+*.log
+
+# Heavy Machine Learning Artifacts & Embeddings (Download/Generate on setup)
+*.npy
+*.pkl
+backend/artifacts/*.pkl
+backend/artifacts/*.npy
+backend/artifacts/*.parquet
+backend/data/*.parquet
+backend/data/*.json
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

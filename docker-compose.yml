@@ -1,0 +1,42 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: recsys_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - TMDB_API_KEY=${TMDB_API_KEY}
+    volumes:
+      - ./backend/data:/app/data
+      - ./backend/artifacts:/app/artifacts
+    networks:
+      - recsys_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: recsys_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - recsys_network
+
+networks:
+  recsys_network:
+    driver: bridge
